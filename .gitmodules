@@ -1,0 +1,3 @@
+[submodule "submoudles/CoreLibrary"]
+	path = submoudles/CoreLibrary
+	url = https://github.com/HCGStudio/HIT-Schedule-Master-Core
