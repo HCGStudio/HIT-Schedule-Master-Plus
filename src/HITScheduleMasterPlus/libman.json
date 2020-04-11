@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "defaultDestination": "wwwroot/lib",
+  "libraries": [
+    {
+      "library": "jquery@3.5.0",
+      "files": ["jquery.min.js", "jquery.min.map", "jquery.js"],
+      "destination": "wwwroot/lib/jquery"
+    },
+    {
+      "library": "font-awesome@5.13.0",
+      "files": ["js/all.min.js", "css/all.min.css"],
+      "destination": "wwwroot/lib/fas"
+    }
+  ]
+}

@@ -1,8 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "欢迎页";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h4 id="file">欢迎使用课表大师！</h4>
+    <p>目前您好像没有打开课表，请从菜单中选择“文件-载入”，然后继续。</p>
+    <p>若要获取使用帮助，请查看导航栏中的“帮助”菜单。</p>
 </div>
+
+<script>
+    const { ipcRenderer } = require("electron");
+    ipcRenderer.on('MoveNext',
+        (event, arg) => {
+            window.location.href = "/Home/ScheduleView";
+        });
+    ipcRenderer.on('ScheduleJson',
+        (event, arg) => {
+            var scheduleArr = JSON.parse(arg);
+
+        });
+</script>

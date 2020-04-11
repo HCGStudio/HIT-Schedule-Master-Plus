@@ -1,0 +1,54 @@
+﻿@model ScheduleModel
+
+@{
+    ViewData["Title"] = "新的课表";
+}
+
+<h3>课表内容：</h3>
+<p>要添加或者导出，请使用导航栏。</p>
+<div class="container">
+    <div class="row">
+        @for (var i = 0; i < Model.Schedule.Count; ++i)
+        {
+            <div class="col-md-6 col-lg-4 col-xl-3" style="margin-bottom: 10px">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Model.Schedule[i].CourseName</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-calendar-day"></i>&nbsp;@Model.Schedule[i].WeekExpression.Replace("]", "").Replace("[", "").Replace("周", "")&nbsp;周</h6>
+                        <p class="card-text">
+                            <i class="fas fa-user"></i>&nbsp;@Model.Schedule[i].Teacher<br/>
+                            <i class="fas fa-location-arrow"></i>&nbsp;@Model.Schedule[i].Location<br/>
+                            <i class="fas fa-clock"></i>&nbsp;@Model.Schedule[i].CourseTimeName<br/>
+
+                        </p>
+                        <button id="modify-@i" onclick="editEntry(@i)" class="btn btn-primary">修改</button>
+                        <button id="delete-@i" onclick="deleteEntry(@i)" class="btn btn-danger">删除</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<script src="~/lib/fas/js/all.min.js"></script>
+<script>
+    const { ipcRenderer } = require("electron");
+    ipcRenderer.on('MoveNext',
+        (event, arg) => {
+            window.location.href = "/Home/ScheduleView";
+        });
+
+    function deleteEntry(id) {
+        ipcRenderer.send('DeleteEntry', id);
+    }
+
+    ipcRenderer.on('AddEntry',
+        (event, arg) => {
+            window.location.href = "/Home/AddScheduleEntry";
+        });
+
+    function editEntry(id) {
+        window.location.href = `/Home/EditSchedule/${id}`;
+    }
+</script>

@@ -1,5 +1,3 @@
-using System;
-
 namespace HITScheduleMasterPlus.Models
 {
     public class ErrorViewModel

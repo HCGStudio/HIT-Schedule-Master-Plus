@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "添加新的课表条目";
+}
+<h4>添加新的课表条目</h4>
+<hr/>
+<div class="row">
+    <form>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程名称</span>
+            </div>
+            <input type="text" id="Name" class="form-control" placeholder="叫什么名字呢">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">教师</span>
+            </div>
+            <input type="text" id="Teacher" class="form-control" placeholder="谁上的课呢">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">地点</span>
+            </div>
+            <input type="text" id="Location" class="form-control" placeholder="在什么地方呢">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程时间</span>
+            </div>
+            <select id="DayOfWeek" class="custom-select">
+                <option selected="selected" value="1">星期一</option>
+                <option value="2">星期二</option>
+                <option value="3">星期三</option>
+                <option value="4">星期四</option>
+                <option value="5">星期五</option>
+                <option value="6">星期六</option>
+                <option value="0">星期日</option>
+            </select>
+            <select id="CourseTime" class="custom-select">
+                <option selected="selected" value="1">一二节</option>
+                <option value="2">三四节</option>
+                <option value="0">中午</option>
+                <option value="3">五六节</option>
+                <option value="4">七八节</option>
+                <option value="5">晚上</option>
+            </select>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    长课&nbsp;
+                    <input id="LongCourse" type="checkbox">
+                </div>
+            </div>
+        </div>
+
+        <label>请在此处填写的周的格式为单个或者范围，中间用"|"隔开，请勿添加空格，比如1|2|3|6或者1-3|6</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程周数</span>
+            </div>
+            <input id="Week" type="text" class="form-control" value="1" placeholder="第几周呢">
+        </div>
+
+    </form>
+</div>
+
+<div>
+    <button class="btn btn-primary" onclick="saveEntry()">确定</button>
+    <button class="btn btn-dark" onclick="window.location.href = '/Home/ScheduleView'">取消</button>
+</div>
+
+
+<script>
+    const { ipcRenderer } = require("electron");
+    ipcRenderer.on('MoveNext',
+        (event, arg) => {
+            window.location.href = "/Home/ScheduleView";
+        });
+    ipcRenderer.on('AddEntry',
+        (event, arg) => {
+            window.location.href = "/Home/AddScheduleEntry";
+        });
+
+    function saveEntry() {
+        if (JSON.stringify(document.getElementById("Week").value) === '{}') {
+
+        } else {
+            ipcRenderer.send(
+                'AddEntry',
+                JSON.stringify(
+                    {
+                        Name: document.getElementById("Name").value,
+                        TeacherName: document.getElementById("Teacher").value,
+                        Location: document.getElementById("Location").value,
+                        DayOfWeek: document.getElementById("DayOfWeek").value,
+                        IsLongCourse: document.getElementById("LongCourse").checked,
+                        CourseTime: document.getElementById("CourseTime").value,
+                        Week: document.getElementById("Week").value
+                    }
+                ));
+        }
+
+    }
+</script>

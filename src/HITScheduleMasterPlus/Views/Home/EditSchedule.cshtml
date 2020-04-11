@@ -1,0 +1,102 @@
+﻿@using HCGStudio.HITScheduleMasterCore
+@model HCGStudio.HITScheduleMasterCore.ScheduleEntry
+
+@{
+    ViewData["Title"] = $"编辑{Model.CourseName}";
+}
+<h4>@Model.CourseName</h4>
+<hr/>
+<div class="row">
+    <form>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程名称</span>
+            </div>
+            <input type="text" id="Name" class="form-control" placeholder="叫什么名字呢" value="@Model.CourseName">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">教师</span>
+            </div>
+            <input type="text" id="Teacher" class="form-control" placeholder="谁上的课呢" value="@Model.Teacher">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">地点</span>
+            </div>
+            <input type="text" id="Location" class="form-control" placeholder="在什么地方呢" value="@Model.Location">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程时间</span>
+            </div>
+            <select id="DayOfWeek" class="custom-select">
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Monday ? "selected" : null)" value="1">星期一</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Tuesday ? "selected" : null)" value="2">星期二</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Wednesday ? "selected" : null)" value="3">星期三</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Thursday ? "selected" : null)" value="4">星期四</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Friday ? "selected" : null)" value="5">星期五</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Saturday ? "selected" : null)" value="6">星期六</option>
+                <option selected="@(Model.DayOfWeek == DayOfWeek.Sunday ? "selected" : null)" value="0">星期日</option>
+            </select>
+            <select id="CourseTime" class="custom-select">
+                <option selected="@(Model.CourseTime == CourseTime.C12 ? "selected" : null)" value="1">一二节</option>
+                <option selected="@(Model.CourseTime == CourseTime.C34 ? "selected" : null)" value="2">三四节</option>
+                <option selected="@(Model.CourseTime == CourseTime.Noon ? "selected" : null)" value="0">中午</option>
+                <option selected="@(Model.CourseTime == CourseTime.C56 ? "selected" : null)" value="3">五六节</option>
+                <option selected="@(Model.CourseTime == CourseTime.C78 ? "selected" : null)" value="4">七八节</option>
+                <option selected="@(Model.CourseTime == CourseTime.C9A ? "selected" : null)" value="5">晚上</option>
+            </select>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    长课&nbsp;
+                    <input id="LongCourse" checked="@(Model.IsLongCourse ? "checked" : null)" type="checkbox">
+                </div>
+            </div>
+        </div>
+
+        <label>请在此处填写的周的格式为单个或者范围，中间用"|"隔开，请勿添加空格，比如1|2|3|6或者1-3|6</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">课程周数</span>
+            </div>
+            <input id="Week" type="text" class="form-control" value="@Model.WeekExpression.Replace("]", "").Replace("[", "").Replace("周", "")" placeholder="第几周呢">
+        </div>
+
+    </form>
+</div>
+
+<div>
+    <button class="btn btn-primary" onclick="saveEntry()">确定</button>
+    <button class="btn btn-dark" onclick="window.location.href = '/Home/ScheduleView'">取消</button>
+</div>
+
+<script>
+    const { ipcRenderer } = require("electron");
+    ipcRenderer.on('MoveNext',
+        (event, arg) => {
+            window.location.href = "/Home/ScheduleView";
+        });
+
+    function saveEntry() {
+        if (JSON.stringify(document.getElementById("Week").value) === '{}') {
+
+        } else {
+            ipcRenderer.send(
+                'EditEntry',
+                JSON.stringify(
+                    {
+                        Id: @Context.Request.Path.ToString().Split("/").Last(),
+                        Name: document.getElementById("Name").value,
+                        TeacherName: document.getElementById("Teacher").value,
+                        Location: document.getElementById("Location").value,
+                        DayOfWeek: document.getElementById("DayOfWeek").value,
+                        IsLongCourse: document.getElementById("LongCourse").checked,
+                        CourseTime: document.getElementById("CourseTime").value,
+                        Week: document.getElementById("Week").value
+                    }
+                ));
+        }
+
+    }
+</script>
