@@ -25,10 +25,12 @@ jobs:
       run: dotnet tool install ElectronNET.CLI -g
     - name: Build
       run: electronize build /target linux
+      env: 
+        GH_TOKEN: ${{secrets.CI_TOKEN}}
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
       # Artifact name
         name: linux-build
       # Directory containing files to upload
-        path: ./src/HITScheduleMasterPlus/bin/desktop
+        path: ./bin/Desktop
