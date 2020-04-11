@@ -7,8 +7,8 @@
   "build": {
     "appId": "com.hcgstudio.HITScheduleMaster.app",
     "productName": "HITScheduleMasterPlus",
-    "copyright": "Copyright © HCGStudio 2019",
-    "buildVersion": "1.0.0",
+    "copyright": "Copyright © HCGStudio 2020",
+    "buildVersion": "0.1.0",
     "compression": "maximum",
     "directories": {
       "output": "../../../bin/Desktop"
