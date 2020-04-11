@@ -33,6 +33,19 @@ namespace HITScheduleMasterPlus.Controllers
                     Label = "文件",
                     Submenu = new[]
                     {
+                        //下载课表
+                        new MenuItem
+                        {
+                            Label = "下载课表",
+                            Accelerator = "CmdOrCtrl+D",
+                            Click = () =>
+                            {
+                                Process.Start(
+                                    new ProcessStartInfo(
+                                            "http://jwts-hit-edu-cn.ivpn.hit.edu.cn/")
+                                        {UseShellExecute = true});
+                            }
+                        },
                         //载入
                         new MenuItem
                         {
