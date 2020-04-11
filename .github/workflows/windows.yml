@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 3.1.201
     - name: Setup Node.js environment
-    - uses: actions/setup-node@v1.4.1
+      uses: actions/setup-node@v1.4.1
     - name: Install dependencies
       run: dotnet restore
     - name: Install tool
@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: electronize build /target win
     - name: Upload artifact
-    - uses: actions/upload-artifact@v1.0.0
+      uses: actions/upload-artifact@v1.0.0
       with:
       # Artifact name
         name: win-build
