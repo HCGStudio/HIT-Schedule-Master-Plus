@@ -27,6 +27,25 @@ namespace HITScheduleMasterPlus.Controllers
         {
             var menu = new[]
             {
+                
+                //课表大师
+                new MenuItem
+                {
+                    Label = "课表大师",
+                    //添加条目
+                    Submenu = new[]
+                    {
+                        new MenuItem
+                        {
+                            Label = "退出课表大师",
+                            Accelerator = "CmdOrCtrl+Q",
+                            Click = () =>
+                            {
+                                Electron.App.Quit();
+                            }
+                        }
+                    }
+                },
                 //文件
                 new MenuItem
                 {
@@ -63,9 +82,9 @@ namespace HITScheduleMasterPlus.Controllers
                                     },
                                     Filters = new[] {new FileFilter {Extensions = new[] {"xls"}, Name = "XLS格式的课表"}}
                                 };
-                                var file = (await Electron.Dialog.ShowOpenDialogAsync(mainWindow, options)).First();
                                 try
                                 {
+                                    var file = (await Electron.Dialog.ShowOpenDialogAsync(mainWindow, options)).First();
                                     var stream = System.IO.File.OpenRead(file);
                                     _schedule = Schedule.LoadFromXlsStream(stream);
                                     Electron.IpcMain.Send(mainWindow, "MoveNext");
@@ -94,9 +113,9 @@ namespace HITScheduleMasterPlus.Controllers
                                     },
                                     Filters = new[] {new FileFilter {Extensions = new[] {"json"}, Name = "Json格式的课表"}}
                                 };
-                                var file = (await Electron.Dialog.ShowOpenDialogAsync(mainWindow, options)).First();
                                 try
                                 {
+                                    var file = (await Electron.Dialog.ShowOpenDialogAsync(mainWindow, options)).First();
                                     var json = await System.IO.File.ReadAllTextAsync(file);
                                     var schedule = JsonConvert.DeserializeObject<EditableSchedule>(json);
                                     Console.WriteLine(schedule.Entries.Count);
@@ -242,15 +261,6 @@ namespace HITScheduleMasterPlus.Controllers
             };
             Electron.Menu.SetApplicationMenu(menu);
         }
-
-        [HttpGet("get/{id}")]
-        public IActionResult GetScheduleEntry(int id)
-        {
-            if (_schedule == null || id < 0 || id > _schedule.Count)
-                return NotFound();
-            return Ok(JsonConvert.SerializeObject(_schedule[id]));
-        }
-
 
         private void RegisterIpc()
         {
