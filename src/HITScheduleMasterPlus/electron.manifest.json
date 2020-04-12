@@ -17,7 +17,7 @@
       "icon": "../../../icon.ico"
     },
     "mac": {
-      "icon": "../../../icon.ics"
+      "icon": "../../../icon.icns"
     },
     "extraResources": [
       {
