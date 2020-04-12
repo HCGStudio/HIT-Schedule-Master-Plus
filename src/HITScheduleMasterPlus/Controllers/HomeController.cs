@@ -241,7 +241,7 @@ namespace HITScheduleMasterPlus.Controllers
                             {
                                 Process.Start(
                                     new ProcessStartInfo(
-                                            "https://github.com/HCGStudio/HIT-Schedule-Master-Plus")
+                                            "https://site.hcgstudio.com/")
                                         {UseShellExecute = true});
                             }
                         },
