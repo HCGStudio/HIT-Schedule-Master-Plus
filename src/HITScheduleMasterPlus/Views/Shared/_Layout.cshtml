@@ -1,12 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using HITScheduleMasterPlus.Models
+<!DOCTYPE html>
 <html lang="zh-Hans">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
-    <link rel="stylesheet" href="lib/fas/css/all.min.css"/>
+    <link rel="stylesheet" href="@Settings.CurrentSetting.Theme.GetThemeCss()" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="lib/fas/css/all.min.css" />
 </head>
 <body>
 @*<header>
@@ -36,11 +37,11 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted" style="-webkit-user-select: none">
+@*<footer class="border-top footer text-muted" style="-webkit-user-select: none">
     <div class="container">
         课表大师 &copy; 2020 - HCGStudio 基于Electron.Net以及ASP .Net Core构建。
     </div>
-</footer>
+</footer>*@
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script>window.$ = window.jQuery = require('~/lib/jquery/jquery.js');</script>
 <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using ElectronNET.API;
+using HITScheduleMasterPlus.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -6,8 +8,9 @@ namespace HITScheduleMasterPlus
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
+            await Settings.Load();
             CreateHostBuilder(args).Build().Run();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using HCGStudio.HITScheduleMasterCore;
 using HITScheduleMasterPlus.Models;
 using Ical.Net.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -23,11 +25,41 @@ namespace HITScheduleMasterPlus.Controllers
             _logger = logger;
         }
 
+        private static MenuItem[] _menu;
+
         private void SetMenu()
         {
-            var menu = new[]
+            var themeMenu = new MenuItem { Label = "主题" };
+            var list = new List<MenuItem>();
+
+            foreach (var name in Enum.GetNames(typeof(Themes.ThemeEnum)))
             {
-                
+                list.Add(new MenuItem
+                {
+                    Label = name,
+                    Type = MenuType.checkbox,
+                    Checked = Settings.CurrentSetting.Theme.ToString() == name,
+                    Click = async () =>
+                    {
+                        foreach (var menuItem in list)
+                        {
+                            menuItem.Checked = menuItem.Label == name;
+                            Electron.Menu.SetApplicationMenu(_menu);
+                            //Save config
+                            Enum.TryParse(name, out Themes.ThemeEnum theme);
+                            Settings.CurrentSetting.Theme = theme;
+                            await Settings.SaveConfig();
+                            //Do reload
+                            var mainWindow = Electron.WindowManager.BrowserWindows.First();
+                            mainWindow.Reload();
+                        }
+                    }
+                });
+            }
+
+            themeMenu.Submenu = list.ToArray();
+            _menu = new[]
+            {
                 //课表大师
                 new MenuItem
                 {
@@ -217,6 +249,8 @@ namespace HITScheduleMasterPlus.Controllers
                         }
                     }
                 },
+                //主题
+                themeMenu,
                 //帮助
                 new MenuItem
                 {
@@ -259,18 +293,20 @@ namespace HITScheduleMasterPlus.Controllers
                     }
                 }
             };
-            Electron.Menu.SetApplicationMenu(menu);
+            
+            Electron.Menu.SetApplicationMenu(_menu);
         }
 
         private void RegisterIpc()
         {
+            Electron.IpcMain.RemoveAllListeners("DeleteEntry");
             Electron.IpcMain.On("DeleteEntry", async args =>
             {
                 var mainWindow = Electron.WindowManager.BrowserWindows.First();
                 var index = args switch
                 {
                     int i => i,
-                    long i => (int) i,
+                    long i => (int)i,
                     string s when int.TryParse(s, out var i) => i,
                     _ => -1
                 };
@@ -281,7 +317,7 @@ namespace HITScheduleMasterPlus.Controllers
                     {
                         Type = MessageBoxType.info,
                         Title = "确认删除",
-                        Buttons = new[] {"Yes", "No"}
+                        Buttons = new[] { "Yes", "No" }
                     };
                     var result = await Electron.Dialog.ShowMessageBoxAsync(options);
                     if (result.Response == 0)
@@ -291,6 +327,7 @@ namespace HITScheduleMasterPlus.Controllers
                     }
                 }
             });
+            Electron.IpcMain.RemoveAllListeners("EditEntry");
             Electron.IpcMain.On("EditEntry", args =>
             {
                 try
@@ -299,9 +336,9 @@ namespace HITScheduleMasterPlus.Controllers
                     int id = obj.Id;
                     string name = obj.Name;
                     string teacher = obj.TeacherName;
-                    var courseTime = (CourseTime) int.Parse(obj.CourseTime.ToString());
+                    var courseTime = (CourseTime)int.Parse(obj.CourseTime.ToString());
                     string location = obj.Location;
-                    var dayOfWeek = (DayOfWeek) int.Parse(obj.DayOfWeek.ToString());
+                    var dayOfWeek = (DayOfWeek)int.Parse(obj.DayOfWeek.ToString());
                     string week = obj.Week;
                     bool isLong = obj.IsLongCourse;
                     if (id < 0 || id > _schedule.Count)
@@ -325,6 +362,7 @@ namespace HITScheduleMasterPlus.Controllers
                     Electron.IpcMain.Send(mainWindow, "MoveNext");
                 }
             });
+            Electron.IpcMain.RemoveAllListeners("AddEntry");
             Electron.IpcMain.On("AddEntry", args =>
             {
                 try
@@ -332,9 +370,9 @@ namespace HITScheduleMasterPlus.Controllers
                     var obj = JsonConvert.DeserializeObject<dynamic>(args as string);
                     string name = obj.Name;
                     string teacher = obj.TeacherName;
-                    var courseTime = (CourseTime) int.Parse(obj.CourseTime.ToString());
+                    var courseTime = (CourseTime)int.Parse(obj.CourseTime.ToString());
                     string location = obj.Location;
-                    var dayOfWeek = (DayOfWeek) int.Parse(obj.DayOfWeek.ToString());
+                    var dayOfWeek = (DayOfWeek)int.Parse(obj.DayOfWeek.ToString());
                     string week = obj.Week;
                     bool isLong = obj.IsLongCourse;
                     var entry = new ScheduleEntry
@@ -365,7 +403,8 @@ namespace HITScheduleMasterPlus.Controllers
         public IActionResult Index()
         {
             RegisterIpc();
-            SetMenu();
+            if(_menu == null)
+                SetMenu();
             return View();
         }
 
@@ -383,18 +422,18 @@ namespace HITScheduleMasterPlus.Controllers
         {
             if (id == null || id < 0 || id > _schedule.Count)
                 return NotFound();
-            return View(_schedule[(int) id]);
+            return View(_schedule[(int)id]);
         }
 
         public IActionResult ScheduleView()
         {
-            return View(new ScheduleModel {Schedule = _schedule});
+            return View(new ScheduleModel { Schedule = _schedule });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel {RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier});
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
