@@ -1,5 +1,11 @@
 # 哈工大课表大师增强版 <del>（打安排御主加）</del>
 
+![Electron.Net linux Build](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/workflows/Electron.Net%20linux%20Build/badge.svg)
+
+![Electron.Net macOS Build](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/workflows/Electron.Net%20macOS%20Build/badge.svg)
+
+![Electron.Net Windows Build](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/workflows/Electron.Net%20Windows%20Build/badge.svg)
+
 本应用使用`ASP dotnet core`+`Electron.Net`编写，完全开放、开源
 
 **本程序仍在早期开发阶段，虽然已经满足基本使用需求，但请在导出之后检查日历是否有问题，以免误课。**
