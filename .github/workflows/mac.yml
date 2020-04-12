@@ -2,8 +2,7 @@ name: Electron.Net macOS Build
 
 on:
   push:
-    tags:
-    - '*'
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -31,10 +30,3 @@ jobs:
       run: scripts/build-mac.sh
       env: 
         GH_TOKEN: ${{secrets.CI_TOKEN}}
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-      # Artifact name
-        name: mac-build
-      # Directory containing files to upload
-        path: ./src/HITScheduleMasterPlus/bin/Desktop

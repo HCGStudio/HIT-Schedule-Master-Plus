@@ -2,16 +2,13 @@ name: Electron.Net Windows Build
 
 on:
   push:
-    tags:
-    - '*'
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -26,10 +23,3 @@ jobs:
       run: scripts/build-win.ps1
       env: 
         GH_TOKEN: ${{secrets.CI_TOKEN}}
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-      # Artifact name
-        name: win-build
-      # Directory containing files to upload
-        path: ./src/HITScheduleMasterPlus/bin/desktop
