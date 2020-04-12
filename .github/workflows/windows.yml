@@ -2,7 +2,8 @@ name: Electron.Net Windows Build
 
 on:
   push:
-    branches: [ master ]
+    tags:
+    - '*'
   pull_request:
     branches: [ master ]
 

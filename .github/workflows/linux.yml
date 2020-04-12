@@ -2,7 +2,8 @@ name: Electron.Net linux Build
 
 on:
   push:
-    branches: [ master ]
+    tags:
+    - '*'
   pull_request:
     branches: [ master ]
 
@@ -19,7 +20,7 @@ jobs:
       uses: actions/setup-node@v1.4.1
     - name: Install tool
       run: dotnet tool install ElectronNET.CLI -g
-    - namd: make script executable
+    - name: make script executable
       run: chmod +x scripts/build-linux.sh
     - name: Build
       run: scripts/build-linux.sh
