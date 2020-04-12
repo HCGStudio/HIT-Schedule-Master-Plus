@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
@@ -19,12 +17,12 @@ jobs:
         dotnet-version: 3.1.201
     - name: Setup Node.js environment
       uses: actions/setup-node@v1.4.1
-    - name: Install dependencies
-      run: dotnet restore
     - name: Install tool
       run: dotnet tool install ElectronNET.CLI -g
+    - namd: make script executable
+      run: chmod +x scripts/build-linux.sh
     - name: Build
-      run: electronize build /target linux
+      run: scripts/build-linux.sh
       env: 
         GH_TOKEN: ${{secrets.CI_TOKEN}}
     - name: Upload artifact
@@ -33,4 +31,4 @@ jobs:
       # Artifact name
         name: linux-build
       # Directory containing files to upload
-        path: ./bin/Desktop
+        path: ./src/HITScheduleMasterPlus/bin/Desktop
