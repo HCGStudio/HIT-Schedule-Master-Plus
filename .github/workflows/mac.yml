@@ -21,9 +21,9 @@ jobs:
     - name: Install tool
       run: dotnet tool install ElectronNET.CLI -g
     - name: make script executable
-      run: chmod +x scripts/build-linux.sh
+      run: chmod +x scripts/build-mac.sh
     - name: Build
-      run: scripts/build-linux.sh
+      run: scripts/build-mac.sh
       env: 
         GH_TOKEN: ${{secrets.CI_TOKEN}}
     - name: Upload artifact
