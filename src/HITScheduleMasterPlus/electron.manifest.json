@@ -26,7 +26,7 @@
       ]
     },
     "mac": {
-      "icon": "../../../icon.icns"
+      "icon": "../../../ic-mon.icns"
     },
     "linux":{
       "icon": "../../../icon.png",

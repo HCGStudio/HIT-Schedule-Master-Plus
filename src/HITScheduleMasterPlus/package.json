@@ -6,12 +6,7 @@
     "url": "https://github.com/HCGStudio/HIT-Schedule-Master-Plus"
   },
   "main": "main.js",
-  "author": {
-    "name" : "HCGStudio", 
-    "email" : "hcg@hcg.today", 
-    "url" : "https://hcg.today"
-      
-  },
+  "author":"HCGStudio <hcg@hcg.today>",
   "license": "GPL-3.0-or-later",
   "scripts": {
     "start": "tsc -p ."
