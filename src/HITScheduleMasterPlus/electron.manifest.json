@@ -14,10 +14,42 @@
       "output": "../../../bin/Desktop"
     },
     "win": {
-      "icon": "../../../icon.ico"
+      "icon": "../../../icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     },
     "mac": {
-      "icon": "../../../icon.icns"
+      "icon": "../../../ic
+      
+      on.icns"
+    },
+    "linux":{
+      "icon": "../../../icon.png",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64" ]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64" ]
+        },        
+        {
+          "target": "pacman",
+          "arch": ["x64" ]
+        },
+        {
+          "target": "tar.gz",
+          "arch": ["x64" ]
+        }
+      ]
     },
     "extraResources": [
       {

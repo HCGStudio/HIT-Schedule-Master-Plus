@@ -1,6 +1,6 @@
 {
   "name": "com.hcgstudio.hitschedulemaster",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Remake of HIT Schedule Master",
   "repository": {
     "url": "https://github.com/HCGStudio/HIT-Schedule-Master-Plus"
@@ -8,20 +8,22 @@
   "main": "main.js",
   "author": "HCGStudio",
   "license": "GPL-3.0-or-later",
+  "email": "yzy688@gmail.com",
   "scripts": {
     "start": "tsc -p ."
   },
   "dependencies": {
-    "electron-updater": "^4.2.5",
-    "image-size": "^0.8.3",
+    "electron-updater": "^4.3.1",
+    "image-size": "^0.9.1",
     "portscanner": "^2.2.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "dasherize": "^2.0.0"
   },
   "devDependencies": {
-    "@types/node": "^13.11.1",
-    "@types/socket.io": "^2.1.4",
-    "electron": "^8.2.1",
-    "tslint": "^6.1.1",
-    "typescript": "^3.8.3"
+    "@types/node": "^14.8.0",
+    "@types/socket.io": "^2.1.11",
+    "electron": "^10.1.1",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.1"
   }
 }
