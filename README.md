@@ -8,7 +8,7 @@
 
 本应用使用`ASP dotnet core`+`Electron.Net`编写，完全开放、开源
 
-**本程序仍在早期开发阶段，虽然已经满足基本使用需求，但请在导出之后检查日历是否有问题，以免误课。**
+快捷使用指南请参见[此处](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/blob/master/QUICKSTART.md)
 
 本应用仅适用于**哈尔滨工业大学**的课程导出，不兼容其他学校的系统
 
@@ -56,61 +56,4 @@
 
 自从原始项目开始拆分之后，所有的操作都建立在先从教务处下载课表的前提下，而不像以前那样自动获取。这么做的原因是本软件是开源的**自由软件**，对于本软件的一切使用都无法进行限制。也就是说，**别有用心**的人可能会利用本程序对学校的教务系统进行攻击。这样造成的不利影响，不仅是对教务系统本身的，更是对于同学们自身利益的侵害。因此从现在开始，本程序不再提供自动下载课表的功能。但还是保留了到教务系统的链接，方便同学们打开链接手动下载课表。虽然减少了自动化，但是同学们的安全得到了保障。
 
-## iCalendar格式的使用
-
-### Windows日历 如何导入
-
-**请注意，Windows版“日历”应用只能将事件导入到已经存在的日历中，这可能是不安全的，因此作者建议采用网页版Outlook，或者Google日历来完成事件导入。**
-
-先使用您的**电子邮件账户**登录Windows日历程序，然后使用Windows日历打开生成的`ics`文件，自动显示导入。
-
-根据提示，选择指定的日历即可完成导入。
-
-![image1](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/raw/master/img/image-1.png)
-
-导入后，日历将与您登录的电子邮件账户同步，在移动端登录邮箱也会同步导入的日历。
-
-### Outlook日历如何导入
-
-1. 首先登陆网页版[网页版Outlook日历](https://outlook.live.com/calendar/)进行导入。
-2. 在左边栏中点击"添加日历"
-![image2](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/raw/master/img/image-3.png)
-3. 在弹出的窗口中，如图示完成新建日历。
-![image3](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/raw/master/img/image-4.png)
-4. 将ICS描述的事件导入到新建的日历中。
-![image4](https://github.com/HCGStudio/HIT-Schedule-Master-Plus/raw/master/img/image-5.png)
-
-
-### Google日历 如何导入
-
-请参考[将活动导入到 Google 日历](https://support.google.com/calendar/answer/37118?hl=zh-Hans)进行导入。
-
-在导入后，日历将于您的Gmail账户同步，在移动端登录Gmail账户，或者下载Google日历客户端就可以使用。
-
-### iOS / iPadOS 如何导入
-
-#### 方法一
-
-在Windows下使用Windows日历，Outlook日历或者Google日历，在`邮件`应用中登录对应的电子邮件账户就可以自动导入日历。
-
-#### 方法二
-
-在Windows下使用电子邮件将`ics`文件通过QQ传到手机，或者作为附件发送电子邮件到`邮件`应用中登录的账户，按照提示即可完成导入。
-
-#### 方法三
-
-通过登录`iCloud`的macOS设备导入。
-
-### macOS 如何导入
-
-双击生成的`ics`文件，选择要导入的日历即可。导入的日历将会通过`iCloud`自动同步到您的iOS以及iPadOS设备中（如果登录）。
-
-### Android 如何导入
-
-#### 方法一
-
-在Windows下使用Windows日历，Outlook日历或者Google日历，在您使用系统的`日历`应用中登录对应的电子邮件账户就可以导入日历到Android设备。
-
-#### 方法二
-
-在Windows下使用电子邮件将`ics`文件通过QQ传到手机，选择使用`日历`打开。如果您的系统无法使用日历打开`ics`文件，建议您安装`Google 日历`（无需登录即可导入）或者其他支持的日历软件（欢迎在PR中提出）。
+**本程序仍在早期开发阶段，虽然已经满足基本使用需求，但请在导出之后检查日历是否有问题，以免误课。**
